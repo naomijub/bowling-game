@@ -15,9 +15,11 @@
       (is (= [7 8 8] (get-score score-3)))))
   (testing "Testing with spae"
     (let [score-2 ["3/" "5 3"]
-          score-3 ["3/" "5 3" "2 6"]]
+          score-3 ["3/" "5 3" "2 6"]
+          score-4 ["3 0" "3/" "5 3"]]
       (is (= [15 8] (get-score score-2)))
-      (is (= [15 8 8] (get-score score-3))))))
+      (is (= [15 8 8] (get-score score-3)))
+      (is (= [3 15 8] (get-score score-4))))))
 
 (deftest score-types-test
   (testing "When score is all numeral returns the integer sum"
