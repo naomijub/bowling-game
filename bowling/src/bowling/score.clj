@@ -28,7 +28,7 @@
         (clojure.string/includes? next  "X") (+ 20 (last-strike-value (rest next-two)))
         :else (+ 10 (sum-numeral-values (first next-two))))))
 
-(defn get-score [result] 
+(defn get-scores [result]
   (loop [results result scores []]
     (let [head (first results) tail (rest results)]
       (if (empty? results)
@@ -40,3 +40,5 @@
                 :else (conj scores (sum-numeral-values head)))]
           (recur tail current-score))))))
                    
+(defn get-final-score [scores]
+  (reduce + 0 scores))

@@ -1,25 +1,36 @@
-(ns bowling.frame-test
+(ns bowling.score-test
   (:require [clojure.test :refer :all]
             [bowling.score :refer :all]
             [bowling.frame :refer [start-game]]))
 
 (deftest score-test
   (testing "empty vector is empty result"
-    (is (= [] (get-score (start-game)))))
+    (is (= [] (get-scores (start-game)))))
   (testing "Different numeral interactions"
     (let [score-1 ["3 4"]
           score-2 ["3 4" "5 3"]
           score-3 ["3 4" "5 3" "2 6"]]
-      (is (= [7] (get-score score-1)))
-      (is (= [7 8] (get-score score-2)))
-      (is (= [7 8 8] (get-score score-3)))))
-  (testing "Testing with spare"
+      (is (= [7] (get-scores score-1)))
+      (is (= [7 8] (get-scores score-2)))
+      (is (= [7 8 8] (get-scores score-3)))))
+  (testing "with spare"
     (let [score-2 ["3/" "5 3"]
           score-3 ["3/" "5 3" "2 6"]
           score-4 ["3 0" "3/" "5 3"]]
-      (is (= [15 8] (get-score score-2)))
-      (is (= [15 8 8] (get-score score-3)))
-      (is (= [3 15 8] (get-score score-4))))))
+      (is (= [15 8] (get-scores score-2)))
+      (is (= [15 8 8] (get-scores score-3)))
+      (is (= [3 15 8] (get-scores score-4)))))
+  (testing "with strike"
+    (let [score-1 ["X" "5 3"]
+          score-2 ["X" "5/" "2 6"]
+          score-3 ["X" "X" "5 3"]
+          score-4 ["X" "X" "5/" "2 0"]
+          score-5 ["X" "X" "X" "0 0"]]
+      (is (= [18 8] (get-scores score-1)))
+      (is (= [20 12 8] (get-scores score-2)))
+      (is (= [25 18 8] (get-scores score-3)))
+      (is (= [25 20 12 2] (get-scores score-4)))
+      (is (= [30 20 10 0] (get-scores score-5))))))
 
 (deftest score-types-test
   (testing "When score is all numeral returns the integer sum"
@@ -38,3 +49,8 @@
       (is (= 25 (sum-strike "X" '("X" "5 3"))))
       (is (= 27 (sum-strike "X" '("X" "7/"))))
       (is (= 30 (sum-strike "X" '("X" "X")))))))
+
+(deftest final-score-test
+  (testing "sum all scores"
+    (let [scores [30 20 10 0 30 20 10 0 6 3]]
+      (is (= 129 (get-final-score scores))))))
