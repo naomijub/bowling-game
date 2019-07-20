@@ -13,4 +13,9 @@
           score-3 (add-turn-pins score-2 7 3)]
       (is (= [[7 2]] score-1))
       (is (= [[7 2] [10 0]] score-2))
-      (is (= [[7 2] [10 0] [7 3]] score-3)))))
+      (is (= [[7 2] [10 0] [7 3]] score-3))))
+  (testing "Results are obtained for strike and spare"
+    (let [score [[7 2] [10 0] [7 3] [5 4]]
+          expected ["7 2" "X" "7/" "5 4"]]
+      (is (= expected (get-printable-result score)))
+      (is (= (count expected) (count score))))))
