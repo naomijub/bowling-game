@@ -18,4 +18,8 @@
     (let [score [[7 2] [10 0] [7 3] [5 4]]
           expected ["7 2" "X" "7/" "5 4"]]
       (is (= expected (get-printable-result score)))
-      (is (= (count expected) (count score))))))
+      (is (= (count expected) (count score)))))
+  (testing "Exception is thrown when try to add extra results after 10 turns"
+    (let [scores [[7 2] [10 0] [7 3] [7 2] [10 0] [7 3] [7 2] [10 0] [7 3] [3 4]]]
+      (is (thrown? Exception (add-turn-pins scores 4 5))))))
+
