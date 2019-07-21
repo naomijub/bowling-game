@@ -39,7 +39,8 @@
   (testing "When the head item is a spare"
     (is (= 17 (sum-spare "3/" "7 2")))
     (is (= 13 (sum-spare "6/" "3/")))
-    (is (= 20 (sum-spare "6/" "X"))))
+    (is (= 20 (sum-spare "6/" "X")))
+    (is (= 15 (sum-spare "6/5" nil))))
   (testing "When the head item is a strike"
     (testing "followed by spare"
       (is (= 20 (sum-strike "X" '("6/" "5 3")))))
@@ -48,9 +49,15 @@
     (testing "followed by strike"
       (is (= 25 (sum-strike "X" '("X" "5 3"))))
       (is (= 27 (sum-strike "X" '("X" "7/"))))
-      (is (= 30 (sum-strike "X" '("X" "X")))))))
+      (is (= 30 (sum-strike "X" '("X" "X")))))
+    (testing "as last"
+      (is (= 19 (sum-strike "X 4 5" '()))))))
 
 (deftest final-score-test
   (testing "sum all scores"
     (let [scores [30 20 10 0 30 20 10 0 6 3]]
-      (is (= 129 (get-final-score scores))))))
+      (is (= 129 (get-final-score scores)))
+      (is (= 171 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7 5" "X 3 5"]))))
+      (is (= 179 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7/" "X 3 5"]))))
+      (is (= 169 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7 6" "6/5"]))))
+      (is (= 179 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "X" "6/5"])))))))
