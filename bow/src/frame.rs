@@ -23,6 +23,10 @@ impl Frame {
       Frame{result: regular_pins(&mut self.result, pin_1, pin_2)}
     }
   }
+
+  pub fn to_string(&self) -> String {
+    self.result.clone().join("|")
+  }
 }
 
 fn last_round_pins(result: &mut Vec<String>,pin_1: i32, pin_2: i32, extra_pin: i32) -> Vec<String> {
@@ -144,5 +148,23 @@ mod tests {
         .add_pins(7, 3, Some(3));
 
     assert_eq!(actual.result.last().unwrap(), &String::from("7/3"))
+  }
+
+  #[test]
+  fn converts_game_to_string() {
+    let game = Frame::start_game();
+    let expected = String::from("7/|7 2|7/|7 2|7/|5 3|7/|5 3|7/|X 3 3");
+    let actual = game.add_pins(7, 3, None)
+        .add_pins(7, 2, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 2, None)
+        .add_pins(7, 3, None)
+        .add_pins(5, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(5, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(10, 3, Some(3));
+
+    assert_eq!(actual.to_string(), expected)
   }
 }
