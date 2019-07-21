@@ -48,3 +48,12 @@
                    
 (defn get-final-score [scores]
   (reduce + 0 scores))
+
+(defn running-total [scores]
+  (loop [head (first scores) tail (rest scores) total []]
+    (let [new-head (+ head (first tail))
+          new-tail (rest tail)
+          new-total (conj total head)]
+      (if (empty? new-tail)
+        (conj new-total new-head)
+        (recur new-head new-tail new-total)))))

@@ -61,3 +61,8 @@
       (is (= 179 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7/" "X 3 5"]))))
       (is (= 169 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7 6" "6/5"]))))
       (is (= 179 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "X" "6/5"])))))))
+
+(deftest running-total-test
+  (testing "Each element has the representation of the sum of previous"
+    (let [scores [30 20 10 0 30 20 10 0 6 3]]
+      (is (= [30 50 60 60 90 110 120 120 126 129] (running-total scores))))))

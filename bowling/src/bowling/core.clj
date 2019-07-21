@@ -19,6 +19,7 @@
         result (f/get-printable-result score-10)
         scores (s/get-scores result)]
     (do
-      (println result)
-      (println scores)
+      (println (str "Result: " result))
+      (println (str "Frame Score: " scores))
+      (println (str "Running Total: " (s/running-total scores)))
       (println (str "Final Score:" (s/get-final-score scores))))))
