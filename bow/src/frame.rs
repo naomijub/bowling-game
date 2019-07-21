@@ -14,6 +14,8 @@ impl Frame {
       panic!("Third pin can only be used in the last round")
     } else if is_last_round >= 10 {
       panic!("Only ten rounds are permitted")
+    } else if is_last_round == 9 && (pin_1 != 10 && (pin_1 + pin_2) != 10 ){
+      panic!("Extra pin can only be played if you strike or spare")
     } else if is_last_round == 9 && (pin_1 == 10 || (pin_1 + pin_2) == 10 ) 
         && pin_3.is_some() {
       return Frame {result: last_round_pins(&mut self.result, pin_1, pin_2, pin_3.unwrap())};
@@ -92,6 +94,22 @@ mod tests {
         .add_pins(7, 3, None)
         .add_pins(7, 3, None)
         .add_pins(7, 3, None);
+  }
+
+  #[test]
+  #[should_panic]
+  fn add_last_round_does_not_have_strike_or_spare() {
+    let game = Frame::start_game();
+    game.add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(7, 3, None)
+        .add_pins(5, 3, Some(3));
   }
 
   #[test]
