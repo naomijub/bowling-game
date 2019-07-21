@@ -15,20 +15,27 @@ impl Frame {
       panic!("Only ten rounds are permitted")
     } else if is_last_round == 9 && (pin_1 == 10 || (pin_1 + pin_2) == 10 ) 
         && pin_3.is_some() {
-      let extra_pin = pin_3.unwrap();
-      if pin_1 == 10 {
+      self.last_round_pins(pin_1, pin_2, pin_3.unwrap());
+    } else {
+      self.regular_pins(pin_1, pin_2);
+    }
+  }
+
+  fn last_round_pins(&mut self,pin_1: i32, pin_2: i32, extra_pin: i32) {
+    if pin_1 == 10 {
         self.result.push(format!("X {} {}", pin_2, extra_pin));
       } else {
         self.result.push(format!("{}/{}", pin_1, extra_pin));
       }
-    } else {
-      let pins = match (pin_1, pin_2) {
+  }
+
+  fn regular_pins(&mut self,pin_1: i32, pin_2: i32) {
+    let pins = match (pin_1, pin_2) {
         (p1, _) if p1 == 10 => String::from("X"),
         (p1, p2) if p1 + p2 == 10 => format!("{}/",p1),
         (p1, p2) => format!("{} {}",p1, p2),
       };
-      self.result.push(pins);
-    }
+    self.result.push(pins);
   }
 }
 
