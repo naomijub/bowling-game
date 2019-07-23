@@ -26,3 +26,16 @@ fn can_get_scores_for_only_numerals() {
 
   assert_eq!(score, vec![9, 6, 9, 7])
 }
+
+#[test]
+fn can_get_scores_for_one_spare() {
+  let game = Frame::start_game();
+  
+  let mut actual = game.add_pins(4, 5, None)
+      .add_pins(6, 4, None)
+      .add_pins(5, 4, None)
+      .add_pins(4, 3, None);
+  let score = get_scores(&mut actual.result);
+
+  assert_eq!(score, vec![9, 15, 9, 7])
+}
