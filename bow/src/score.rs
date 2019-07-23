@@ -1,20 +1,25 @@
-fn get_scores(scores: &mut Vec<String>) -> Vec<i32> {
-  recur_scores(scores.swap_remove(0), scores, &mut Vec::new())
+pub fn get_scores(scores: &mut Vec<String>) -> Vec<i32> {
+  recur_scores(scores.remove(0), scores, &mut Vec::new())
 }
 
 fn recur_scores(head: String, tail:  &mut Vec<String>, scores: &mut Vec<i32>) -> Vec<i32> {
-  if tail.len() <= 0 { return scores.clone(); }
+  if head.is_empty() && tail.len() <= 0 { return scores.clone(); }
   match &head {
     // h if h.contains("X") => , 
     head if head.contains("/") => {
       let head_score = count_spare(head.to_owned(), &tail.first());
       scores.push(head_score);
-      recur_scores(tail.swap_remove(0), tail, scores)
+      recur_scores(tail.remove(0), tail, scores)
+    },
+    head if tail.len() <= 0 => {
+      let head_score = count_numerals(head.to_owned());
+      scores.push(head_score);
+      scores.to_vec()
     },
     _ => {
       let head_score = count_numerals(head);
       scores.push(head_score);
-      recur_scores(tail.swap_remove(0), tail, scores)
+      recur_scores(tail.remove(0), tail, scores)
     }
   }
 }
