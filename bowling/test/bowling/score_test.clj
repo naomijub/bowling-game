@@ -60,6 +60,7 @@
       (is (= 171 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7 5" "X 3 5"]))))
       (is (= 179 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7/" "X 3 5"]))))
       (is (= 169 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "7 6" "6/5"]))))
+      (is (= 0 (get-final-score (get-scores ["0 0" "0 0" "0 0" "0 0" "0 0" "0 0" "0 0" "0 0" "0 0" "0 0"]))))
       (is (= 179 (get-final-score (get-scores ["4 5" "X" "X" "7/" "7/" "7/" "7/" "7/" "X" "6/5"])))))))
 
 (deftest running-total-test
